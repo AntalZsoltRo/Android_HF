@@ -12,12 +12,13 @@ import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
-    int firstNumberInt;
-    int secondNumberInt;
+    float firstNumberInt;
+    float secondNumberInt;
     TextView result;
     EditText firstNumberInput;
     EditText secondNumberInput;
-    public boolean getNumbers(){
+
+    public boolean getNumbers() {
 
         firstNumberInput = findViewById(R.id.firstNumber);
         secondNumberInput = findViewById(R.id.secondNumber);
@@ -27,13 +28,22 @@ public class MainActivity extends AppCompatActivity {
         String firstNumberStr = firstNumberInput.getText().toString();
         String secondNumberStr = secondNumberInput.getText().toString();
 
-        if((firstNumberStr.equals(null) && secondNumberStr.equals(null)) || (firstNumberStr.equals("") && secondNumberStr.equals("")) ){
+
+        if (firstNumberStr.equals("") && !secondNumberStr.isEmpty()) {
+            result.setText("Please enter first value!");
+            return false;
+        }
+        if (secondNumberStr.equals("") && !firstNumberStr.isEmpty()) {
+            result.setText("Please enter second number!");
+            return false;
+        }
+        if ((firstNumberStr.equals(null) && secondNumberStr.equals(null)) || (firstNumberStr.equals("") && secondNumberStr.equals(""))) {
             result.setText("Please enter values!");
             return false;
         }
         else {
-            firstNumberInt = Integer.parseInt(firstNumberStr);
-            secondNumberInt = Integer.parseInt(secondNumberStr);
+            firstNumberInt = Float.parseFloat(firstNumberStr);
+            secondNumberInt = Float.parseFloat(secondNumberStr);
         }
         return true;
     }
@@ -49,17 +59,45 @@ public class MainActivity extends AppCompatActivity {
         Button divisionButton = findViewById(R.id.division);
 
 
-            plusButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (getNumbers()){
-                        int resultInt = firstNumberInt + secondNumberInt;
-                        //String resultStr = String.valueOf(firstNumberInput + secondNumberInput)
-                        result.setText(Integer.toString(resultInt));
-                    }
+        plusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (getNumbers()) {
+                    float resultInt = firstNumberInt + secondNumberInt;
+                    result.setText(Float.toString(resultInt));
                 }
-            });
+            }
+        });
 
+        minusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (getNumbers()) {
+                    float resultInt = firstNumberInt - secondNumberInt;
+                    result.setText(Float.toString(resultInt));
+                }
+            }
+        });
+
+        multiButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (getNumbers()) {
+                    float resultInt = firstNumberInt * secondNumberInt;
+                    result.setText(Float.toString(resultInt));
+                }
+            }
+        });
+
+        divisionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (getNumbers()) {
+                    float resultInt = firstNumberInt / secondNumberInt;
+                    result.setText(Float.toString(resultInt));
+                }
+            }
+        });
 
     }
 }
